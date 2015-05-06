@@ -2,6 +2,12 @@
 
 This repository contains code for SimRank-IDE method to approximate SimRank computation.
 
+## Installing dependencies
+
+1. Python 2.7.9.
+
+2. NumPy (http://www.numpy.org/), SciPy (http://www.scipy.org/), scikit-learn (http://scikit-learn.org/stable/). 
+
 ## Running 
 
 ### Ubuntu
