@@ -4,6 +4,8 @@ This repository contains code for SimRank-IDE method to approximate SimRank comp
 
 ## Running 
 
+### Ubuntu
+
 To run a test on a Simple English Wikipedia graph run the following:
 ```
 cd simplewiki
