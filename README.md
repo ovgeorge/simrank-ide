@@ -1,6 +1,6 @@
 # SimRank-IDE
 
-This repository contains code for SimRank-IDE method to approximate SimRank computation.
+A procedure based on iterative diagonal estimation method to compute [SimRank](http://en.wikipedia.org/wiki/SimRank) approximately.
 
 ## Installing dependencies
 
