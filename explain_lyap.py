@@ -1,8 +1,10 @@
 from scipy.io import loadmat
 from cPickle import load
-import h5py
 import numpy as np
 import scipy.sparse as scsp
+import sys
+from sklearn.preprocessing import normalize 
+
 
 def simrank_single_source(W, d, x, num_items=100):
     '''
@@ -16,7 +18,7 @@ def simrank_single_source(W, d, x, num_items=100):
     for i in xrange(num_items):
         wx = W.dot(x)
         dwx = D.dot(wx)
-        for k in xrange(i+1):
+        for k in xrange(i + 1):
             wtdwx = W.T.dot(dwx)
             dwx = wtdwx
         s = s + dwx
@@ -25,13 +27,10 @@ def simrank_single_source(W, d, x, num_items=100):
     return s
 
 def load_data(file_d):
-    from sklearn.preprocessing import normalize 
-
     print 'Loading data...'
     d = loadmat(path_to_data + file_d)['d']
     W = loadmat(path_to_data + 'W.mat')['W']
     W =  normalize(W * 1.0, norm='l1', axis=0)
-    # W = h5py.File(path_to_data + 'Wn.mat')['W']
     print 'Loading data... Done'
     print 'The size of d', d.shape
     print 'The size of W', W.shape
@@ -55,12 +54,12 @@ def similarity(p_ids, file_d):
     x = np.zeros((n, 1))
     nrm_p = len(p_ids)
     for id in p_ids:
-        x[id,0] = 1.0/nrm_p
+        x[id,0] = 1.0 / nrm_p
     print 'Compute Simrank...'
     s = simrank_single_source(np.sqrt(c) * W, d, x, 20)
     print 'Compute Simrank... Done'
     idx = sorted(range(max(s.shape)), key=lambda k: -s[k])
-    for k in range(30):
+    for k in xrange(30):
         d_id = idx[k]    
         try:
             print s[d_id], dense_id_to_concept(d_id)
@@ -70,12 +69,10 @@ def similarity(p_ids, file_d):
 def main(q, file_d):
     p_c = [q]
     p_ids = map(concept_to_dense_id, p_c)
-    n_ids = []
     print "The query is '{0}'".format(p_c[0])
     similarity(p_ids, file_d)
 
 if __name__ == "__main__":
-    import sys
     if len(sys.argv) < 3:
         sys.exit('Usage: %s path_to_directory file_with_diagonal.mat query \n file_with_diagonal.mat, and all other necessary data assumed to be located at path_to_direcoty' % sys.argv[0])
     global path_to_data 
