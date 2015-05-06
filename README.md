@@ -14,7 +14,8 @@ A procedure based on iterative diagonal estimation method to compute [SimRank](h
 
 To run a test on a Simple English Wikipedia graph run the following:
 ```
-cd simplewiki
+git clone https://github.com/ovgeorge/simrank-ide.git
+cd ./simrank-ide/simplewiki/
 sh main.sh
 cd ..
 python main.py
