@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from re import finditer
-from cPickle import load
+from json import load
 
 
 def process_line(line, t2i, i2t, outfile):
@@ -17,14 +17,14 @@ def process_line(line, t2i, i2t, outfile):
     text names to IDs for consistency (and some space savings).
     '''
     pattern = "\((\d+),(\d+),'(.*?)',(\d+)\)[,;]"
-    current_page = None
+    line = line.replace('\\', '')
     for match in finditer(pattern, line):
-        from_page, namespace, to_page, namespce2 = match.groups()
-        if not to_page in t2i:
+        from_page, namespace, to_page, namespace_2 = match.groups()
+        if to_page not in t2i:
             continue
         if namespace != '0':
             continue
-        if not int(from_page) in i2t:
+        if from_page not in i2t:
             continue
         outfile.write(from_page + ' ')
         outfile.write(str(t2i[to_page]) + ' ')
@@ -36,17 +36,18 @@ def main():
     Reads pagelinks.sql line by line and processes it. Needs the pickled
     dictionary mapping page names to IDs
     '''
-    print "Building the graph..."
+    print("Building the graph...")
     crap = 'INSERT INTO `pagelinks` VALUES'
     path = ''  # set if needed (different current dir)
-    t2i = load(open(path + 'title-ID_dict.pickle'))
-    i2t = load(open(path + 'ID-title_dict.pickle'))
+    t2i = load(open(path + 'title-ID_dict.json', 'rb'))
+    i2t = load(open(path + 'ID-title_dict.json', 'rb'))
 
     with open(path + 'graph.txt', 'w') as outfile:
-        for line in open(path + 'pagelinks.sql'):
-            if line[:len(crap)] == crap:
-                process_line(line, t2i, i2t, outfile)
-    print "Building the graph... Done"
+        for line in open(path + 'pagelinks.sql', 'rb'):
+            if crap in str(line):
+                process_line(str(line), t2i, i2t, outfile)
+    print("Building the graph... Done")
+
 
 if __name__ == "__main__":
     main()
