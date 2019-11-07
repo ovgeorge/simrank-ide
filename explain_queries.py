@@ -19,7 +19,7 @@ def main(path_to_data, matfile):
     s2d = load(open(path_to_data + 'sparse_to_dense.json', 'r'))
     i2c = load(open(path_to_data + 'ID-to-category.json', 'r'))
     category_titles = load(open(path_to_data + 'category-titles.json', 'r'))
-    category_titles = category_titles[:250]  # random.sample(category_titles, 500) if need random
+    category_titles = category_titles[:50]  # random.sample(category_titles, 500) if need random
     total_cat = {}
     titles = tqdm(category_titles)
     for title in titles:

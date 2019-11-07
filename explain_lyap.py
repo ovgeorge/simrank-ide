@@ -1,14 +1,14 @@
 import sys
-from pickle import load
+from json import load
 
 from utils import concept_to_dense_id, similarity
 
 
 def main(path_to_data, file_d, query):
-    d2s = load(open(path_to_data + 'dense_to_sparse.pickle'))
-    i2t = load(open(path_to_data + 'ID-title_dict.pickle'))
-    t2i = load(open(path_to_data + 'title-ID_dict.pickle'))
-    s2d = load(open(path_to_data + 'sparse_to_dense.pickle'))
+    d2s = load(open(path_to_data + 'dense_to_sparse.json', 'r'))
+    i2t = load(open(path_to_data + 'ID-title_dict.json', 'r'))
+    t2i = load(open(path_to_data + 'title-ID_dict.json', 'r'))
+    s2d = load(open(path_to_data + 'sparse_to_dense.json', 'r'))
     p_c = [query]
     p_ids = list(map(concept_to_dense_id, [t2i], [s2d], p_c))
     print("The query is '{0}'".format(p_c[0]))
