@@ -4,7 +4,7 @@ A procedure based on iterative diagonal estimation method to compute [SimRank](h
 
 ## Installing dependencies
 
-1. Python 2.7.9.
+1. Updated to python 3
 
 2. NumPy (http://www.numpy.org/), SciPy (http://www.scipy.org/), scikit-learn (http://scikit-learn.org/stable/). 
 
